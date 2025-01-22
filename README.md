@@ -92,11 +92,7 @@ EmergencyServicePlatform/
 │   └── Makefile
 └── README.md
 Contribution
-Bonus: Working with Git
-Earn up to 5 bonus points for effectively using Git:
 
-3 points: Maintain a Git repository with meaningful commits.
-2 points: Use clear and descriptive commit messages.
 References
 STOMP Protocol Documentation
 C++ Multithreading Guide
