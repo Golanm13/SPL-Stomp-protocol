@@ -1,84 +1,72 @@
-Project Description
-This project implements an Emergency Service Platform that allows users to subscribe to specific emergency channels (e.g., fire, medical, police, natural disasters) to report emergencies and receive relevant updates. It fosters effective community collaboration during crises.
+# 🚨 Emergency Service Platform
 
-The system is implemented using the STOMP (Simple Text-Oriented Messaging Protocol) for communication between a Java-based server and a C++ client. The platform supports:
+## Overview
+The Emergency Service Platform enables users to **subscribe to emergency channels** (fire, medical, police, natural disasters) to **report incidents** and **receive real-time updates**.  
+It leverages the **STOMP protocol** for communication between a **Java-based server** and a **C++ client**, fostering effective community collaboration during crises.
 
-Thread-Per-Client (TPC): Each client connection is handled in a separate thread.
-Reactor Pattern: Event-driven model for efficiently managing multiple client connections.
-Features
-Server (Java)
-Centralized STOMP server.
-Supports:
-TPC Mode: Dedicated thread for each client.
-Reactor Mode: Event-driven architecture.
-Handles client subscriptions, message broadcasts, and STOMP frame processing.
-Client (C++)
-User interaction via console.
-Supports STOMP frame communication:
-Login and Logout.
-Subscribe/Unsubscribe to/from emergency channels.
-Report emergencies from JSON files.
-Summarize and save channel-specific emergency updates.
-Multi-threaded implementation for simultaneous keyboard input and server communication.
-Installation and Setup
-Prerequisites
-Java 17 or higher.
-Maven (for building the server).
-C++17 or higher.
-Make (for building the client).
-Linux-based environment or Docker.
-Server Setup
-Navigate to the server directory.
-Compile the project:
-bash
-Copy
-Edit
+## Architecture
+- **Server (Java)**
+  - Implements a centralized STOMP server.
+  - Two concurrency models supported:
+    - **Thread-Per-Client (TPC):** Each client runs on its own thread.
+    - **Reactor Pattern:** Event-driven, non-blocking I/O for high scalability.
+  - Handles client subscriptions, message broadcasting, and STOMP frame processing.
+
+- **Client (C++)**
+  - Console-based user interaction.
+  - Supports STOMP frame communication:
+    - Login / Logout
+    - Subscribe / Unsubscribe to emergency channels
+    - Report emergencies from JSON files
+    - Summarize and save channel-specific updates
+  - Multi-threaded: separates keyboard input from server communication.
+
+## Features
+- Real-time emergency reporting and updates
+- Channel-based subscription model
+- Two server execution modes: **TPC** and **Reactor**
+- JSON-based reporting for structured emergency data
+- Summary generation and export per channel
+
+## Installation & Setup
+
+### Prerequisites
+- **Java 17+**
+- **Maven** (for building the server)
+- **C++17+**
+- **Make** (for building the client)
+- Linux environment (or Docker)
+
+### Server Setup
+```bash
+cd server
 mvn compile
-Run the server:
-bash
-Copy
-Edit
-mvn exec:java -Dexec.mainClass="bgu.spl.net.impl.stomp.StompServer" -Dexec.args="<port> <mode>"
-Replace <port> with the desired port number (e.g., 7777).
-Replace <mode> with either tpc or reactor.
-Client Setup
-Navigate to the client directory.
-Compile the client:
-bash
-Copy
-Edit
-make
-Run the client:
-bash
-Copy
-Edit
-./bin/StompEMIClient
-Commands and Usage
-Client Commands
-Login: login {host:port} {username} {password}
-Join Channel: join {channel_name}
-Exit Channel: exit {channel_name}
-Report Emergency: report {file_path}
-Summarize Channel: summary {channel_name} {user} {file}
-Logout: logout
-Server Modes
-TPC Mode: Each client is assigned a dedicated thread for communication.
-Reactor Mode: A single-threaded, non-blocking mechanism for high scalability.
-Testing
-Server
-Use the provided StompServer.jar to test the client before implementing your server:
+mvn exec:java -Dexec.mainClass="bgu.spl.net.impl.stomp.StompServer" -Dexec.args="<7777> <tpc|reactor>"
 
-bash
-Copy
-Edit
-java -jar server/target/StompServer.jar <port> <mode>
-Client
-Run the pre-compiled executable (StompESClient) in the bin directory for initial server testing.
+
+Client Setup
+cd client
+make
+./bin/StompESClient
+
+Client Commands
+login {host:port} {username} {password}
+join {channel_name}
+exit {channel_name}
+report {file_path}
+summary {channel_name} {user} {file}
+logout
+
+Testing
+
+Use the provided StompServer.jar for initial testing:
+
+java -jar server/target/StompServer.jar
+
+
+Run the precompiled client (StompESClient) from the bin directory.
 
 Project Structure
-css
-Copy
-Edit
 EmergencyServicePlatform/
 ├── server/
 │   ├── src/
@@ -91,9 +79,11 @@ EmergencyServicePlatform/
 │   ├── bin/
 │   └── Makefile
 └── README.md
-Contribution
 
 References
+
 STOMP Protocol Documentation
-C++ Multithreading Guide
-Git Best Practices
+
+C++ Multithreading Best Practices
+
+Java Concurrency Patterns
